@@ -35,7 +35,7 @@ class MovieSearchViewModel(private val movieRepository: MovieRepository) {
                     Log.d(TAG, it.toString())
                     when (it) {
                         is HttpException -> toastMsg.set(MessageSet.NETWORK_ERROR)
-                        else -> toastMsg.set(MessageSet.LAST_PAGE)
+                        else -> toastMsg.set(MessageSet.NETWORK_ERROR)
                     }
                     isLoading.set(false)
                 })

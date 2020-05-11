@@ -5,19 +5,21 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.mtjin.androidarchitecturestudy.data.search.Movie
+import io.reactivex.Completable
+import io.reactivex.Single
 
 @Dao
 interface MovieDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertMovies(movies: List<Movie>)
+    fun insertMovies(movies: List<Movie>) : Completable
 
     @Query("SELECT * FROM movie")
-    fun getAllMovies(): List<Movie>
+    fun getAllMovies(): Single<List<Movie>>
 
     @Query("SELECT * FROM movie WHERE title LIKE '%' || :title || '%'")
-    fun getMoviesByTitle(title: String): List<Movie>
+    fun getMoviesByTitle(title: String): Single<List<Movie>>
 
     @Query("DELETE FROM movie")
-    fun deleteAllMovies()
+    fun deleteAllMovies() : Completable
 }

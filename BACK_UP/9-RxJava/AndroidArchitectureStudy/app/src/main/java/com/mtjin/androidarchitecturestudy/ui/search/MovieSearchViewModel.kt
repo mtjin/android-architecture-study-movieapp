@@ -3,12 +3,12 @@ package com.mtjin.androidarchitecturestudy.ui.search
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.mtjin.androidarchitecturestudy.base.BaseViewModel
 import com.mtjin.androidarchitecturestudy.data.search.Movie
 import com.mtjin.androidarchitecturestudy.data.search.source.MovieRepository
 import retrofit2.HttpException
 
-class MovieSearchViewModel(private val movieRepository: MovieRepository) : ViewModel() {
+class MovieSearchViewModel(private val movieRepository: MovieRepository) : BaseViewModel() {
 
     private var currentQuery: String = ""
     val query = MutableLiveData<String>()

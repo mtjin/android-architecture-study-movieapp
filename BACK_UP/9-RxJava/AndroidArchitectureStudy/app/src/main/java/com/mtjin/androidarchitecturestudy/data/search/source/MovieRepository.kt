@@ -1,18 +1,15 @@
 package com.mtjin.androidarchitecturestudy.data.search.source
 
 import com.mtjin.androidarchitecturestudy.data.search.Movie
+import io.reactivex.Single
 
 interface MovieRepository {
     fun getSearchMovies(
-        query: String,
-        success: (List<Movie>) -> Unit,
-        fail: (Throwable) -> Unit
-    )
+        query: String
+    ): Single<List<Movie>>
 
     fun getPagingMovies(
         query: String,
-        start: Int,
-        success: (List<Movie>) -> Unit,
-        fail: (Throwable) -> Unit
-    )
+        start: Int
+    ): Single<List<Movie>>
 }

@@ -1,6 +1,7 @@
 package com.mtjin.androidarchitecturestudy.api
 
 import com.mtjin.androidarchitecturestudy.data.search.MovieResponse
+import io.reactivex.Single
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -14,5 +15,5 @@ interface ApiInterface {
         @Query("query") query: String,
         @Query("start") start: Int = 1,
         @Query("display") display: Int = 15
-    ): Call<MovieResponse>
+    ): Single<MovieResponse>
 }

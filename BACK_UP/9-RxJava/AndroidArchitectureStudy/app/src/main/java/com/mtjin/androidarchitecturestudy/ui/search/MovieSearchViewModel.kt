@@ -30,12 +30,13 @@ class MovieSearchViewModel(private val movieRepository: MovieRepository) : BaseV
         if (currentQuery.isEmpty()) {
             _toastMsg.value = MessageSet.EMPTY_QUERY
         } else {
-            _isLoading.value = true
             compositeDisposable.add(
                 movieRepository.getSearchMovies(currentQuery)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeBy(
+                    .doOnSubscribe {
+                        _isLoading.value = true
+                    }.subscribeBy(
                         onError = {
                             _isLoading.value = false
                             Log.d(TAG, it.toString())
@@ -54,7 +55,6 @@ class MovieSearchViewModel(private val movieRepository: MovieRepository) : BaseV
                             }
                         }
                     )
-
             )
         }
     }
@@ -65,7 +65,9 @@ class MovieSearchViewModel(private val movieRepository: MovieRepository) : BaseV
             movieRepository.getPagingMovies(currentQuery, offset)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy(
+                .doOnSubscribe {
+                    _isLoading.value = true
+                }.subscribeBy(
                     onError = {
                         Log.d(TAG, it.toString())
                         _isLoading.value = false

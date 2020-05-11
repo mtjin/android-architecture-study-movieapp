@@ -22,7 +22,6 @@ val localDataModule: Module = module {
                 get(),
                 MovieDatabase::class.java, "Movie.db"
             )
-            .allowMainThreadQueries()
             .build()
     }
 }

@@ -2,7 +2,7 @@ package com.mtjin.androidarchitecturestudy.data.search.source.local
 
 import androidx.room.Dao
 import androidx.room.Insert
-import androidx.room.OnConflictStrategy
+import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
 import com.mtjin.androidarchitecturestudy.data.search.Movie
 import io.reactivex.Completable
@@ -11,8 +11,8 @@ import io.reactivex.Single
 @Dao
 interface MovieDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertMovies(movies: List<Movie>) : Completable
+    @Insert(onConflict = REPLACE)
+    fun insertMovies(movies: List<Movie>): Completable
 
     @Query("SELECT * FROM movie")
     fun getAllMovies(): Single<List<Movie>>
@@ -21,5 +21,5 @@ interface MovieDao {
     fun getMoviesByTitle(title: String): Single<List<Movie>>
 
     @Query("DELETE FROM movie")
-    fun deleteAllMovies() : Completable
+    fun deleteAllMovies(): Completable
 }

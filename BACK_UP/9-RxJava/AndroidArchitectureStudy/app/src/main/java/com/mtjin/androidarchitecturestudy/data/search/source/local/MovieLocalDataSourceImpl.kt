@@ -1,5 +1,6 @@
 package com.mtjin.androidarchitecturestudy.data.search.source.local
 
+import android.util.Log
 import com.mtjin.androidarchitecturestudy.data.search.Movie
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -9,13 +10,11 @@ class MovieLocalDataSourceImpl(private val movieDao: MovieDao) : MovieLocalDataS
     override fun insertMovies(movies: List<Movie>): Completable {
         return movieDao
             .insertMovies(movies)
-            .subscribeOn(Schedulers.io())
     }
 
     override fun getAllMovies(): Single<List<Movie>> {
         return movieDao
             .getAllMovies()
-            .subscribeOn(Schedulers.io())
             .map {
                 it
             }
@@ -25,6 +24,7 @@ class MovieLocalDataSourceImpl(private val movieDao: MovieDao) : MovieLocalDataS
         return movieDao.getMoviesByTitle(title)
             .subscribeOn(Schedulers.io())
             .map {
+                Log.d("AAAA", "getALLMOVIES()   " + it.size )
                 it
             }
     }

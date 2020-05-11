@@ -84,7 +84,8 @@ class MovieRepositoryImpl(
                     if (start != it.start) {
                         Single.error(IllegalStateException("Last Page"))
                     } else {
-                        Single.just(it.movies)
+                        movieLocalDataSource.insertMovies(it.movies)
+                            .andThen(Single.just(it.movies))
                     }
                 }
             }

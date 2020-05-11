@@ -18,14 +18,12 @@ class MovieRepositoryImpl(
     ): Single<List<Movie>> {
         if (networkManager.checkNetworkState()) {
             return movieRemoteDataSource.getSearchMovies(query)
-                .doOnSuccess { movieLocalDataSource.insertMovies(it.movies)
-                    Log.d("AAA" , "1111")}
                 .flatMap {
-                    Log.d("AAA" , "2222")
                     if (it.movies.isEmpty()) {
                         Single.error(IllegalStateException("No Search Result"))
                     } else {
-                        Single.just(it.movies)
+                        movieLocalDataSource.insertMovies(it.movies)
+                            .andThen(Single.just(it.movies))
                     }
                 }
 //            // remote 검색 전 local에서 먼저 검색해서 데이터 전달

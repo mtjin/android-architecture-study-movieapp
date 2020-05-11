@@ -6,6 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import com.mtjin.androidarchitecturestudy.base.BaseViewModel
 import com.mtjin.androidarchitecturestudy.data.search.Movie
 import com.mtjin.androidarchitecturestudy.data.search.source.MovieRepository
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.schedulers.Schedulers
 import retrofit2.HttpException
 
 class MovieSearchViewModel(private val movieRepository: MovieRepository) : BaseViewModel() {
@@ -28,50 +31,58 @@ class MovieSearchViewModel(private val movieRepository: MovieRepository) : BaseV
             _toastMsg.value = MessageSet.EMPTY_QUERY
         } else {
             _isLoading.value = true
-            movieRepository.getSearchMovies(currentQuery,
-                success = {
-                    if (it.isEmpty()) {
-                        _toastMsg.value = MessageSet.NO_RESULT
-                    } else {
-                        _movieList.value = it as ArrayList<Movie>
-                        _toastMsg.value = MessageSet.SUCCESS
-                    }
-                    _isLoading.value = false
-                },
-                fail = {
-                    Log.d(TAG, it.toString())
-                    when (it) {
-                        is HttpException -> _toastMsg.value = MessageSet.NETWORK_ERROR
-                        else -> _toastMsg.value = MessageSet.NETWORK_ERROR
-                    }
-                    _isLoading.value = false
-                })
+            compositeDisposable.add(
+                movieRepository.getSearchMovies(currentQuery)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeBy(
+                        onError = {
+                            _isLoading.value = false
+                            Log.d(TAG, it.toString())
+                            when (it) {
+                                is HttpException -> _toastMsg.value = MessageSet.NETWORK_ERROR
+                                else -> _toastMsg.value = MessageSet.NETWORK_ERROR
+                            }
+                        },
+                        onSuccess = { movies ->
+                            _isLoading.value = false
+                            if (movies.isEmpty()) {
+                                _toastMsg.value = MessageSet.NO_RESULT
+                            } else {
+                                _movieList.value = movies as ArrayList<Movie>
+                                _toastMsg.value = MessageSet.SUCCESS
+                            }
+                        }
+                    )
+
+            )
         }
     }
 
     fun requestPagingMovie(offset: Int) {
         Log.d(TAG, currentQuery)
-        _isLoading.value = true
-        movieRepository.getPagingMovies(currentQuery, offset,
-            success = {
-                if (it.isEmpty()) {
-                    _toastMsg.value = MessageSet.LAST_PAGE
-                } else {
-                    val pagingMovieList = _movieList.value
-                    pagingMovieList?.addAll(it)
-                    _movieList.value = pagingMovieList
-                    _toastMsg.value = MessageSet.SUCCESS
-                }
-                _isLoading.value = false
-            },
-            fail = {
-                Log.d(TAG, it.toString())
-                when (it) {
-                    is HttpException -> MessageSet.NETWORK_ERROR
-                    else -> _toastMsg.value = MessageSet.LAST_PAGE
-                }
-                _isLoading.value = false
-            })
+        compositeDisposable.add(
+            movieRepository.getPagingMovies(currentQuery, offset)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                    onError = {
+                        Log.d(TAG, it.toString())
+                        _isLoading.value = false
+                        when (it) {
+                            is HttpException -> MessageSet.NETWORK_ERROR
+                            else -> _toastMsg.value = MessageSet.LAST_PAGE
+                        }
+                    },
+                    onSuccess = { movies ->
+                        _isLoading.value = false
+                        val pagingMovieList = _movieList.value
+                        pagingMovieList?.addAll(movies)
+                        _movieList.value = pagingMovieList
+                        _toastMsg.value = MessageSet.SUCCESS
+                    }
+                )
+        )
     }
 
     enum class MessageSet {

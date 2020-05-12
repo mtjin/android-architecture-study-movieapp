@@ -7,7 +7,6 @@ import com.mtjin.androidarchitecturestudy.base.BaseViewModel
 import com.mtjin.androidarchitecturestudy.data.search.Movie
 import com.mtjin.androidarchitecturestudy.data.search.source.MovieRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import retrofit2.HttpException
 
@@ -34,27 +33,22 @@ class MovieSearchViewModel(private val movieRepository: MovieRepository) : BaseV
                 movieRepository.getSearchMovies(currentQuery)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .doOnSubscribe {
-                        _isLoading.value = true
-                    }.subscribeBy(
-                        onError = {
-                            _isLoading.value = false
-                            Log.d(TAG, it.toString())
-                            when (it) {
-                                is HttpException -> _toastMsg.value = MessageSet.NETWORK_ERROR
-                                else -> _toastMsg.value = MessageSet.NETWORK_ERROR
-                            }
-                        },
-                        onSuccess = { movies ->
-                            _isLoading.value = false
-                            if (movies.isEmpty()) {
-                                _toastMsg.value = MessageSet.NO_RESULT
-                            } else {
-                                _movieList.value = movies as ArrayList<Movie>
-                                _toastMsg.value = MessageSet.SUCCESS
-                            }
+                    .doOnNext { _isLoading.value = true }
+                    .doOnTerminate { _isLoading.value = false }
+                    .subscribe({ movies ->
+                        if (movies.isEmpty()) {
+                            _toastMsg.value = MessageSet.NO_RESULT
+                        } else {
+                            _movieList.value = movies as ArrayList<Movie>?
+                            _toastMsg.value = MessageSet.SUCCESS
                         }
-                    )
+                    }, {
+                        Log.d(TAG, it.toString())
+                        when (it.toString()) {
+                            "Network Error" -> _toastMsg.value = MessageSet.NETWORK_ERROR
+                            else -> _toastMsg.value = MessageSet.NETWORK_ERROR
+                        }
+                    })
             )
         }
     }
@@ -62,28 +56,23 @@ class MovieSearchViewModel(private val movieRepository: MovieRepository) : BaseV
     fun requestPagingMovie(offset: Int) {
         Log.d(TAG, currentQuery)
         compositeDisposable.add(
-            movieRepository.getPagingMovies(currentQuery, offset)
+            movieRepository.getRemotePagingMovies(currentQuery, offset)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe {
-                    _isLoading.value = true
-                }.subscribeBy(
-                    onError = {
-                        Log.d(TAG, it.toString())
-                        _isLoading.value = false
-                        when (it) {
-                            is HttpException -> MessageSet.NETWORK_ERROR
-                            else -> _toastMsg.value = MessageSet.LAST_PAGE
-                        }
-                    },
-                    onSuccess = { movies ->
-                        _isLoading.value = false
-                        val pagingMovieList = _movieList.value
-                        pagingMovieList?.addAll(movies)
-                        _movieList.value = pagingMovieList
-                        _toastMsg.value = MessageSet.SUCCESS
+                .doOnSubscribe { _isLoading.value = true }
+                .doAfterTerminate { _isLoading.value = false }
+                .subscribe({ movies ->
+                    val pagingMovieList = _movieList.value
+                    pagingMovieList?.addAll(movies)
+                    _movieList.value = pagingMovieList
+                    _toastMsg.value = MessageSet.SUCCESS
+                }, {
+                    Log.d(TAG, it.toString())
+                    when (it.toString()) {
+                        "Network Error" -> _toastMsg.value = MessageSet.NETWORK_ERROR
+                        else -> _toastMsg.value = MessageSet.LAST_PAGE
                     }
-                )
+                })
         )
     }
 

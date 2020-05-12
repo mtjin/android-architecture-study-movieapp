@@ -33,7 +33,7 @@ class MovieRepositoryImpl(
                 .onErrorReturn { listOf() }
                 .flatMapPublisher { cachedMovies ->
                     if (cachedMovies.isEmpty()) {
-                        Flowable.just(error(IllegalStateException("Network Error")))
+                        Flowable.error(IllegalStateException("Network Error"))
                     } else {
                         Flowable.just(cachedMovies)
                     }

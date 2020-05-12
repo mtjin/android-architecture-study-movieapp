@@ -8,7 +8,7 @@ import com.mtjin.androidarchitecturestudy.data.search.source.MovieRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class MovieSearchViewModel(private val movieRepository: MovieRepository) : BaseViewModel() {
+open class MovieSearchViewModel(private val movieRepository: MovieRepository) : BaseViewModel() {
 
     private var currentQuery: String = ""
     val query = MutableLiveData<String>()
@@ -30,8 +30,8 @@ class MovieSearchViewModel(private val movieRepository: MovieRepository) : BaseV
                 movieRepository.getSearchMovies(currentQuery)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .doOnNext { _isLoading.value = true }
-                    .doAfterTerminate { _isLoading.value = false }
+                    .doOnSubscribe { showProgress() }
+                    .doAfterTerminate { hideProgress() }
                     .subscribe({ movies ->
                         if (movies.isEmpty()) {
                             _toastMsg.value = MessageSet.NO_RESULT
@@ -51,8 +51,8 @@ class MovieSearchViewModel(private val movieRepository: MovieRepository) : BaseV
             movieRepository.getRemotePagingMovies(currentQuery, offset)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { _isLoading.value = true }
-                .doAfterTerminate { _isLoading.value = false }
+                .doOnSubscribe { showProgress() }
+                .doAfterTerminate { hideProgress() }
                 .subscribe({ movies ->
                     val pagingMovieList = _movieList.value
                     pagingMovieList?.addAll(movies)
@@ -65,6 +65,14 @@ class MovieSearchViewModel(private val movieRepository: MovieRepository) : BaseV
                     }
                 })
         )
+    }
+
+    private fun showProgress() {
+        _isLoading.value = true
+    }
+
+    private fun hideProgress() {
+        _isLoading.value = false
     }
 
     enum class MessageSet {

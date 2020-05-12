@@ -1,6 +1,5 @@
 package com.mtjin.androidarchitecturestudy.ui.search
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.mtjin.androidarchitecturestudy.base.BaseViewModel

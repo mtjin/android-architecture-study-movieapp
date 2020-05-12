@@ -2,14 +2,15 @@ package com.mtjin.androidarchitecturestudy.ui.splash
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.mtjin.androidarchitecturestudy.R
-import com.mtjin.androidarchitecturestudy.base.BaseActivity
 import com.mtjin.androidarchitecturestudy.ui.login.LoginActivity
 import com.mtjin.androidarchitecturestudy.ui.search.MovieSearchActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SplashActivity : BaseActivity() {
+open class SplashActivity : AppCompatActivity() {
     private val viewModel: SplashViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,5 +40,9 @@ class SplashActivity : BaseActivity() {
         showToast(getString(R.string.auto_login_msg))
         startActivity(Intent(this, MovieSearchActivity::class.java))
         finish()
+    }
+
+    private fun showToast(msg: String) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
 }

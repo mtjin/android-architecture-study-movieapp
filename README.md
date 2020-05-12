@@ -3,6 +3,7 @@
 MVC, MVP, DataBinding, LIVEDATA, MVVM, KOIN, Multi Module, ROOM, GLIDE, RETROFIT2, 무한스크롤
 
 RxJava는 공부하며 적용중
+<
 [2020-05-12]
 model layter 에 적용 
 

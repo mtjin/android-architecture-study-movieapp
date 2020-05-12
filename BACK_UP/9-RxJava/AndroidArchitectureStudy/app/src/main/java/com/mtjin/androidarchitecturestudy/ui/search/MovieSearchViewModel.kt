@@ -8,7 +8,6 @@ import com.mtjin.androidarchitecturestudy.data.search.Movie
 import com.mtjin.androidarchitecturestudy.data.search.source.MovieRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import retrofit2.HttpException
 
 class MovieSearchViewModel(private val movieRepository: MovieRepository) : BaseViewModel() {
 
@@ -25,7 +24,6 @@ class MovieSearchViewModel(private val movieRepository: MovieRepository) : BaseV
 
     fun requestMovie() {
         currentQuery = query.value.toString().trim()
-        Log.d(TAG, currentQuery)
         if (currentQuery.isEmpty()) {
             _toastMsg.value = MessageSet.EMPTY_QUERY
         } else {
@@ -43,18 +41,13 @@ class MovieSearchViewModel(private val movieRepository: MovieRepository) : BaseV
                             _toastMsg.value = MessageSet.SUCCESS
                         }
                     }, {
-                        Log.d(TAG, it.toString())
-                        when (it.toString()) {
-                            "Network Error" -> _toastMsg.value = MessageSet.NETWORK_ERROR
-                            else -> _toastMsg.value = MessageSet.NETWORK_ERROR
-                        }
+                        _toastMsg.value = MessageSet.NETWORK_ERROR
                     })
             )
         }
     }
 
     fun requestPagingMovie(offset: Int) {
-        Log.d(TAG, currentQuery)
         compositeDisposable.add(
             movieRepository.getRemotePagingMovies(currentQuery, offset)
                 .subscribeOn(Schedulers.io())
@@ -67,8 +60,7 @@ class MovieSearchViewModel(private val movieRepository: MovieRepository) : BaseV
                     _movieList.value = pagingMovieList
                     _toastMsg.value = MessageSet.SUCCESS
                 }, {
-                    Log.d(TAG, it.toString())
-                    when (it.toString()) {
+                    when (it.message) {
                         "Network Error" -> _toastMsg.value = MessageSet.NETWORK_ERROR
                         else -> _toastMsg.value = MessageSet.LAST_PAGE
                     }
@@ -82,9 +74,5 @@ class MovieSearchViewModel(private val movieRepository: MovieRepository) : BaseV
         NETWORK_ERROR,
         SUCCESS,
         NO_RESULT
-    }
-
-    companion object {
-        const val TAG = "MovieSearchTAG"
     }
 }

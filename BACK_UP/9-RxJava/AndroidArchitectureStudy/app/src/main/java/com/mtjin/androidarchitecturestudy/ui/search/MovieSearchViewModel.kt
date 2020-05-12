@@ -32,7 +32,7 @@ class MovieSearchViewModel(private val movieRepository: MovieRepository) : BaseV
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnNext { _isLoading.value = true }
-                    .doOnTerminate { _isLoading.value = false }
+                    .doAfterTerminate { _isLoading.value = false }
                     .subscribe({ movies ->
                         if (movies.isEmpty()) {
                             _toastMsg.value = MessageSet.NO_RESULT

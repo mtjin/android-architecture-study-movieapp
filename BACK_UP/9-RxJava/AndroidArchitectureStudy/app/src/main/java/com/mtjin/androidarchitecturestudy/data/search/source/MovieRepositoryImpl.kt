@@ -1,6 +1,5 @@
 package com.mtjin.androidarchitecturestudy.data.search.source
 
-import android.util.Log
 import com.mtjin.androidarchitecturestudy.data.search.Movie
 import com.mtjin.androidarchitecturestudy.data.search.source.local.MovieLocalDataSource
 import com.mtjin.androidarchitecturestudy.data.search.source.remote.MovieRemoteDataSource
@@ -14,20 +13,32 @@ class MovieRepositoryImpl(
     private val networkManager: NetworkManager
 ) : MovieRepository {
     override fun getSearchMovies(query: String): Flowable<List<Movie>> {
-        return movieLocalDataSource.getSearchMovies(query)
-            .onErrorReturn { listOf() }
-            .flatMapPublisher { cachedMovies ->
-                if (cachedMovies.isEmpty()) {
-                    getRemoteSearchMovies(query)
-                        .toFlowable()
-                        .onErrorReturn { listOf() }
-                } else {
-                    val local = Single.just(cachedMovies)
-                    val remote = getRemoteSearchMovies(query)
-                        .onErrorResumeNext { local }
-                    Single.concat(local, remote)
+        if (networkManager.checkNetworkState()) {
+            return movieLocalDataSource.getSearchMovies(query)
+                .onErrorReturn { listOf() }
+                .flatMapPublisher { cachedMovies ->
+                    if (cachedMovies.isEmpty()) {
+                        getRemoteSearchMovies(query)
+                            .toFlowable()
+                            .onErrorReturn { listOf() }
+                    } else {
+                        val local = Single.just(cachedMovies)
+                        val remote = getRemoteSearchMovies(query)
+                            .onErrorResumeNext { local }
+                        Single.concat(local, remote)
+                    }
                 }
-            }
+        } else {
+            return movieLocalDataSource.getSearchMovies(query)
+                .onErrorReturn { listOf() }
+                .flatMapPublisher { cachedMovies ->
+                    if (cachedMovies.isEmpty()) {
+                        Flowable.just(error(IllegalStateException("Network Error")))
+                    } else {
+                        Flowable.just(cachedMovies)
+                    }
+                }
+        }
     }
 
     override fun getRemoteSearchMovies(

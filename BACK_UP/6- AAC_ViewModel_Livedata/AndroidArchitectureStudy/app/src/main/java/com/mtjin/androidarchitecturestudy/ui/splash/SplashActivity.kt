@@ -2,12 +2,13 @@ package com.mtjin.androidarchitecturestudy.ui.splash
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.mtjin.androidarchitecturestudy.R
-import com.mtjin.androidarchitecturestudy.base.BaseActivity
 import com.mtjin.androidarchitecturestudy.data.login.source.LoginRepository
 import com.mtjin.androidarchitecturestudy.data.login.source.LoginRepositoryImpl
 import com.mtjin.androidarchitecturestudy.data.login.source.local.LoginLocalDataSource
@@ -16,7 +17,7 @@ import com.mtjin.androidarchitecturestudy.ui.login.LoginActivity
 import com.mtjin.androidarchitecturestudy.ui.search.MovieSearchActivity
 import com.mtjin.androidarchitecturestudy.utils.PreferenceManager
 
-class SplashActivity : BaseActivity() {
+class SplashActivity : AppCompatActivity() {
     private lateinit var preferenceManager: PreferenceManager
     private lateinit var loginLocalDataSource: LoginLocalDataSource
     lateinit var loginRepository: LoginRepository
@@ -62,5 +63,9 @@ class SplashActivity : BaseActivity() {
         showToast(getString(R.string.auto_login_msg))
         startActivity(Intent(this, MovieSearchActivity::class.java))
         finish()
+    }
+
+    private fun showToast(msg: String) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
 }

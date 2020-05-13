@@ -3,7 +3,6 @@ package com.mtjin.androidarchitecturestudy.ui.login
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -17,8 +16,7 @@ import com.mtjin.androidarchitecturestudy.databinding.ActivityLoginBinding
 import com.mtjin.androidarchitecturestudy.ui.search.MovieSearchActivity
 import com.mtjin.androidarchitecturestudy.utils.PreferenceManager
 
-class LoginActivity : BaseActivity() {
-    private lateinit var binding: ActivityLoginBinding
+class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login) {
     private lateinit var preferenceManager: PreferenceManager
     private lateinit var loginLocalDataSource: LoginLocalDataSource
     private lateinit var loginRepository: LoginRepository
@@ -37,8 +35,6 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun inject() {
-        binding =
-            DataBindingUtil.setContentView(this, R.layout.activity_login)
         preferenceManager = PreferenceManager(this)
         loginLocalDataSource = LoginLocalDataSourceImpl(preferenceManager)
         loginRepository = LoginRepositoryImpl(loginLocalDataSource)

@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -14,9 +13,9 @@ import com.mtjin.androidarchitecturestudy.databinding.ActivityMovieSearchBinding
 import com.mtjin.androidarchitecturestudy.utils.MyApplication
 
 
-class MovieSearchActivity : BaseActivity() {
+class MovieSearchActivity :
+    BaseActivity<ActivityMovieSearchBinding>(R.layout.activity_movie_search) {
 
-    private lateinit var binding: ActivityMovieSearchBinding
     private lateinit var movieAdapter: MovieAdapter
     private lateinit var myApplication: MyApplication
     private val viewModel: MovieSearchViewModel by viewModels {
@@ -36,9 +35,7 @@ class MovieSearchActivity : BaseActivity() {
 
     private fun inject() {
         myApplication = application as MyApplication
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_search)
         binding.vm = viewModel
-        binding.lifecycleOwner = this
     }
 
     private fun initAdapter() {

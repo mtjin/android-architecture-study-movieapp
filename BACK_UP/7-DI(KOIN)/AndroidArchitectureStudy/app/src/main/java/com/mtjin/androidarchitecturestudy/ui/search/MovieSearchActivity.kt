@@ -3,7 +3,6 @@ package com.mtjin.androidarchitecturestudy.ui.search
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.mtjin.androidarchitecturestudy.R
 import com.mtjin.androidarchitecturestudy.base.BaseActivity
@@ -11,23 +10,17 @@ import com.mtjin.androidarchitecturestudy.databinding.ActivityMovieSearchBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class MovieSearchActivity : BaseActivity() {
+class MovieSearchActivity :
+    BaseActivity<ActivityMovieSearchBinding>(R.layout.activity_movie_search) {
 
-    private lateinit var binding: ActivityMovieSearchBinding
     private lateinit var movieAdapter: MovieAdapter
     private val viewModel: MovieSearchViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initBinding()
+        binding.vm = viewModel
         initViewModelCallback()
         initAdapter()
-    }
-
-    private fun initBinding() {
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_search)
-        binding.vm = viewModel
-        binding.lifecycleOwner = this
     }
 
     private fun initAdapter() {

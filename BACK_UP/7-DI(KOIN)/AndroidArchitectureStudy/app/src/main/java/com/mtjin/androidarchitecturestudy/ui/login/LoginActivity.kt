@@ -2,7 +2,6 @@ package com.mtjin.androidarchitecturestudy.ui.login
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.mtjin.androidarchitecturestudy.R
 import com.mtjin.androidarchitecturestudy.base.BaseActivity
@@ -10,20 +9,13 @@ import com.mtjin.androidarchitecturestudy.databinding.ActivityLoginBinding
 import com.mtjin.androidarchitecturestudy.ui.search.MovieSearchActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class LoginActivity : BaseActivity() {
-    private lateinit var binding: ActivityLoginBinding
+class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login) {
     private val viewModel: LoginViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initBinding()
-        initViewModelCallback()
-    }
-
-    private fun initBinding() {
-        binding =
-            DataBindingUtil.setContentView(this, R.layout.activity_login)
         binding.vm = viewModel
+        initViewModelCallback()
     }
 
     private fun initViewModelCallback() {

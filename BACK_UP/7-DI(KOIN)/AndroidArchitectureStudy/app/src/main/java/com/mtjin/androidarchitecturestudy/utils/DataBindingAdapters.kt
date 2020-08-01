@@ -35,8 +35,8 @@ fun RatingBar.setMovieRating(score: String) {
 @BindingAdapter("setItems")
 fun RecyclerView.setAdapterItems(items: List<Movie>?) {
     with((adapter as MovieAdapter)) {
-        this.clear()
-        items?.let { this.addItems(it) }
+        clear()
+        items?.let { addItems(it) }
     }
 }
 
@@ -50,7 +50,7 @@ fun RecyclerView.setEndlessScroll(
                 viewModel.requestPagingMovie(totalItemsCount + 1)
             }
         }
-    this.addOnScrollListener(scrollListener)
+    addOnScrollListener(scrollListener)
 }
 
 

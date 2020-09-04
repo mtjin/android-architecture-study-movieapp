@@ -12,7 +12,7 @@ model layer 쪽 통신하는데 rxjava 적용
 <p>
 [2020-07-19]
 DI 코인 -> 대거 적용 1차 완료 
-<img src="https://blog.kakaocdn.net/dn/vF8kY/btqHxbgrgFH/bBFaq7U1AwzintPTq42E3K/img.png" align="left" height="400" width="200" >
+<img src="https://blog.kakaocdn.net/dn/vF8kY/btqHxbgrgFH/bBFaq7U1AwzintPTq42E3K/img.png" align="left" >
 <p>
 <br>
 <img src="https://user-images.githubusercontent.com/37071007/82137613-b5068680-9854-11ea-8008-e46d62c489bc.png" align="left" height="400" width="200" >

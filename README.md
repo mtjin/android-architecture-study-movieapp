@@ -1,6 +1,5 @@
 # android-architecture-study-movieapp
 안드로이드 아키텍처 스터디 정리
-MVC, MVP, DataBinding, LIVEDATA, MVVM, KOIN, Multi Module, ROOM, GLIDE, RETROFIT2, 무한스크롤, Dagger2
 
 정석준 안드로이드 개발자님 안드로이드 아키텍처 스터디에 참여하며 네이버 영화 검색 앱 개발한 프로젝트 정리
 
@@ -9,6 +8,12 @@ MVC, MVP, DataBinding, LIVEDATA, MVVM, KOIN, Multi Module, ROOM, GLIDE, RETROFIT
 (https://github.com/mtjin/GoogryAndroidArchitectureStudy)
 
 
+## 주요 사용 기술
+MVC, MVP, DataBinding, LIVEDATA, MVVM, KOIN, Multi Module, ROOM, GLIDE, RETROFIT2, 무한스크롤, Dagger2
+
+
+
+## 프로젝트 정리 및 목차
 순차별 정리 : https://youngest-programming.tistory.com/212
 
 
@@ -16,27 +21,26 @@ MVC, MVP, DataBinding, LIVEDATA, MVVM, KOIN, Multi Module, ROOM, GLIDE, RETROFIT
 
 [2주차] Model(DataSource, Repository) 추가
 
-[3주차] MVP (Model View Presenter)
+[3주차] MVP (Model View Presenter) 구조로 변경
 
-[4주차] 데이터바인딩 (Databinding)
+[4주차] 데이터바인딩 (Databinding) 적용
 
-[5주차] MVVM 
+[5주차] MVVM 구조로 변경
 
-[6주차] AAC ViewModel, LiveData
+[6주차] AAC ViewModel, LiveData 적용
 
-[7주차] DI(Dependency Injection) -KOIN-
+[7주차] DI(Dependency Injection) -KOIN- 적용
 
-[8주차] Multi Module
+[8주차] Multi Module 적용
 
-[개인 업데이트 1] RxJava2, RxAndroid2
+[개인 업데이트 1] RxJava2, RxAndroid2 적용
 
-[개인 업데이트 2] Dagger
-
-
+[개인 업데이트 2] Koin -> Dagger2 로 변경 
 
 
 
-<p>
+## 기록
+
 [2020-05-12]
 model layer 쪽 통신하는데 rxjava 적용 
 

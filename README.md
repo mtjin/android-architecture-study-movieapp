@@ -2,7 +2,40 @@
 안드로이드 아키텍처 스터디 정리
 MVC, MVP, DataBinding, LIVEDATA, MVVM, KOIN, Multi Module, ROOM, GLIDE, RETROFIT2, 무한스크롤, Dagger2
 
-RxJava는 공부하며 적용중
+정석준 안드로이드 개발자님 안드로이드 아키텍처 스터디에 참여하며 네이버 영화 검색 앱 개발한 프로젝트 정리
+
+(https://github.com/StudyFork/GoogryAndroidArchitectureStudy)
+
+(https://github.com/mtjin/GoogryAndroidArchitectureStudy)
+
+
+순차별 정리 : https://youngest-programming.tistory.com/212
+
+
+[1주차] MVC 로 구현
+
+[2주차] Model(DataSource, Repository) 추가
+
+[3주차] MVP (Model View Presenter)
+
+[4주차] 데이터바인딩 (Databinding)
+
+[5주차] MVVM 
+
+[6주차] AAC ViewModel, LiveData
+
+[7주차] DI(Dependency Injection) -KOIN-
+
+[8주차] Multi Module
+
+[개인 업데이트 1] RxJava2, RxAndroid2
+
+[개인 업데이트 2] Dagger
+
+
+
+
+
 <p>
 [2020-05-12]
 model layer 쪽 통신하는데 rxjava 적용 

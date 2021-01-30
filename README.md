@@ -14,7 +14,7 @@
 </div>
 
 ## 주요 사용 기술
-MVC, MVP, DataBinding, LIVEDATA, MVVM, KOIN, Multi Module, ROOM, GLIDE, RETROFIT2, 무한스크롤, Dagger2
+MVC, MVP, MVVM, Clean Architecture, DataBinding, LIVEDATA, KOIN, Multi Module, ROOM, GLIDE, RETROFIT2, 무한스크롤, Dagger2
 
 
 

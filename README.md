@@ -1,4 +1,4 @@
-# android-architecture-study-movieapp (BACK_UP 폴더 각 프로젝트 Open으로 열면됨)
+# android-architecture-study-movieapp (BACK_UP 폴더 안에 각 프로젝트 Open으로 열면됨)
 안드로이드 아키텍처 스터디 정리
 
 정석준 안드로이드 개발자님 안드로이드 아키텍처 스터디에 참여하며 네이버 영화 검색 앱 개발한 프로젝트 정리

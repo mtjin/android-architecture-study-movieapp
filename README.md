@@ -62,5 +62,7 @@ DI 코인 -> 대거 적용 1차 완료
   
   
 [2021-01-30]
-클린 아키텍처 적용    [저장소](https://github.com/mtjin/mtjin-android-clean-architecture-movieapp)
+클린 아키텍처 적용   [저장소](https://github.com/mtjin/mtjin-android-clean-architecture-movieapp)
+<div>
 <img src="https://user-images.githubusercontent.com/37071007/106156645-23159280-61c5-11eb-8add-14383e827487.png">
+</div>

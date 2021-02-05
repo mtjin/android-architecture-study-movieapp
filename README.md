@@ -14,7 +14,7 @@
 </div>
 
 ## 주요 사용 기술
-MVC, MVP, MVVM, Clean Architecture, DataBinding, LIVEDATA, KOIN, Multi Module, ROOM, GLIDE, RETROFIT2, 무한스크롤, Dagger2
+MVC, MVP, MVVM, Clean Architecture, DataBinding, LIVEDATA, KOIN, Multi Module, ROOM, GLIDE, RETROFIT2, 무한스크롤, Dagger2, 로컬캐싱
 
 
 
@@ -48,13 +48,16 @@ MVC, MVP, MVVM, Clean Architecture, DataBinding, LIVEDATA, KOIN, Multi Module, R
 
 ## 기록
 
+
+[스터디 메인 아키텍처]
+<img src="https://user-images.githubusercontent.com/37071007/107049034-f983e900-680c-11eb-9c24-12512bc630a7.png" align="center" >
+
+
 [2020-05-12]
-model layer 쪽 통신하는데 rxjava 적용 
+model layer 쪽 통신하는데 rxjava 적용, 로컬캐싱 구현
 
 간략 정리 : https://youngest-programming.tistory.com/212
 
-
-  
   
 [2020-07-19]
 DI 코인 -> 대거 적용 1차 완료 

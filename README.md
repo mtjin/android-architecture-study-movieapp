@@ -40,7 +40,7 @@ MVC, MVP, MVVM, Clean Architecture, DataBinding, LIVEDATA, KOIN, Multi Module, R
 
 [개인 업데이트 1] RxJava2, RxAndroid2 적용
 
-[개인 업데이트 2] Koin -> Dagger2 로 변경 
+[개인 업데이트 2] Dagger2 적용
 
 [개인 업데이트 3] 클린아키텍처 적용 [저장소](https://github.com/mtjin/mtjin-android-clean-architecture-movieapp)
 
